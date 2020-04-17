@@ -1,0 +1,15 @@
+# put this at the top if your travis build fails as "rakefile not found"
+#language: generic
+
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t oogabooga/docker-react -f Dockerfile.dev .
+
+# script: (old version)
+#- docker run USERNAME/docker-react npm run test -- --coverage
+
+script:
+  - docker run -e CI=true oogabooga/docker-react npm run test
